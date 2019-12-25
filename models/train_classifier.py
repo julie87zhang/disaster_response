@@ -18,6 +18,10 @@ import argparse
 
 
 def load_data(database_filepath):
+    """
+    load data from database
+    
+    """
     engine = create_engine('sqlite:///'+database_filepath)
     df = pd.read_sql_table('process_date_3',engine)
     X=df.message
@@ -29,6 +33,10 @@ def load_data(database_filepath):
 # X=df.message.values
 #Y=df.loc[:,'related':].values
 def tokenize(text):
+    
+   """
+   tokenize text 
+   """
    
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
@@ -42,6 +50,9 @@ def tokenize(text):
 
 
 def build_model():
+    """
+    create model pipeline
+    """
     pipeline=Pipeline([
     ('vect', CountVectorizer(tokenizer=tokenize)),
     ('tfidf', TfidfTransformer()),
@@ -61,7 +72,9 @@ def build_model():
 
 def evaluate_model(model, X_test, Y_test, category_names):
     
-   
+   """
+   model evaluation
+   """
     y_pred = model.predict(X_test)
     #y_true=df.loc[:,'related':]
     #category_names=df.columns[4:].tolist()
@@ -70,11 +83,18 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+    save trained model into pickel file
+    """
+    
     with open(model_filepath, 'wb') as pkl_filename:
         pickle.dump(model, pkl_filename)
 
 
 def main():
+    """
+    main function of model training
+    """
     if len(sys.argv) == 3:
         database_filepath, model_filepath = sys.argv[1:]
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
