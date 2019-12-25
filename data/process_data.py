@@ -7,6 +7,11 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    Input: message filepath and categories filepath
+    Output: read 2 files and generate merged initial dataframe 
+    
+    """
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     df = messages.merge(categories,on='id',how='left')
@@ -14,6 +19,11 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    """
+    Input: initial dataframe
+    Output: cleansing version of dataframe
+    
+    """
     categories=df.iloc[:,-1].str.split(";",expand=True)
     row = categories.iloc[0,:].map(lambda x:x[:-2])
     category_colnames = row.tolist()
@@ -32,11 +42,18 @@ def clean_data(df):
     return df
 
 def save_data(df, database_filename):
+    """
+    save clean version of dataframe into database for model training and validation
+    
+    """
     engine = create_engine('sqlite:///'+database_filename)
     df.to_sql('process_date_3', engine, index=False) 
 
 
 def main():
+    """
+    main function of cleansing part
+    """
     if len(sys.argv) == 4:
 
         messages_filepath, categories_filepath, database_filepath = sys.argv[1:]
