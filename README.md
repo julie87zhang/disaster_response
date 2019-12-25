@@ -5,7 +5,7 @@
 This project is about analyzing disaster data in order to build a model for an API that classifies disaster messages. Based on the real messages that were sent during disaster events, a machine learning pipeline was created to categorize these events so that messages can be sent to an appropriate disaster relief agency.
 The project includes a web app where an emergency worker can input a new message and get classification results in several categories. The web app will also display visualizations of the data. 
 
-### Project Components
+### Project Components:
 
 There are three components in this project.
 1. ETL Pipeline
